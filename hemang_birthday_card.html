@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday Hemang!</title>
+<style>
+*{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Georgia,serif;color:#fff;background:radial-gradient(circle at 50% 20%,#27335f,#080d20 65%);overflow-x:hidden}
+.wrap{min-height:100vh;display:grid;place-items:center;padding:28px 16px;position:relative}
+.card{width:min(680px,100%);text-align:center;padding:34px 22px 40px;border:1px solid #f6d887;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.035));box-shadow:0 20px 70px #0009;position:relative;z-index:2}
+.kicker{letter-spacing:4px;text-transform:uppercase;color:#ffe6a2;font: bold 12px Arial,sans-serif}
+h1{font-size:clamp(42px,10vw,76px);line-height:1;margin:15px 0;color:#ffe09a;text-shadow:0 0 22px #f4b94c88}
+.name{font-size:clamp(36px,8vw,58px);font-style:italic;color:#fff;margin:8px 0 20px}
+.cake{font-size:88px;filter:drop-shadow(0 8px 12px #0008);animation:bob 2.5s ease-in-out infinite}
+.message{font-size:19px;line-height:1.65;max-width:520px;margin:16px auto;color:#f8f0df}
+.wish{color:#ffdf8d;font-size:18px;margin-top:22px}
+button{border:0;border-radius:999px;padding:13px 22px;margin:8px 5px;background:linear-gradient(90deg,#f6c45c,#fff0b8);color:#271a0b;font-weight:bold;font-size:15px;cursor:pointer;box-shadow:0 6px 20px #0005}
+button.secondary{background:transparent;border:1px solid #f6d887;color:#ffe6a2}
+#surprise{display:none;margin:22px auto 0;padding:18px;border-radius:16px;background:#ffffff12;color:#fff0c9;font-size:20px;line-height:1.5}
+.spark{position:fixed;top:-20px;font-size:18px;opacity:.8;animation:fall linear infinite;z-index:1}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.1}}
+@keyframes bob{50%{transform:translateY(-9px)}}
+footer{font:12px Arial,sans-serif;color:#c9c5d4;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <main class="card">
+    <div class="kicker">A special celebration for you</div>
+    <h1>Happy Birthday</h1>
+    <div class="name">Big Brother ✨</div>
+    <div class="cake">🎂</div>
+    <p class="message">May your day be filled with laughter, lovely surprises and unforgettable moments. Wishing you good health, happiness, success and everything you wish for, Big Brother!</p>
+    <div class="wish">Keep shining and enjoy your special day! 💛</div>
+    <div style="margin-top:22px">
+      <button id="musicBtn">▶ Play birthday music</button>
+      <button class="secondary" id="surpriseBtn">🎁 Open your surprise</button>
+    </div>
+    <div id="surprise">You deserve all the happiness in the world, Big Brother!<br>Have an amazing year ahead. 🎉💖</div>
+    <footer>Made with warm wishes • Celebrate big!</footer>
+  </main>
+</div>
+<script>
+const symbols=['✨','🎈','💛','⭐','🎊'];
+for(let i=0;i<32;i++){let s=document.createElement('div');s.className='spark';s.textContent=symbols[i%symbols.length];s.style.left=Math.random()*100+'vw';s.style.animationDuration=(6+Math.random()*8)+'s';s.style.animationDelay=(-Math.random()*12)+'s';s.style.fontSize=(12+Math.random()*18)+'px';document.body.appendChild(s)}
+document.getElementById('surpriseBtn').onclick=()=>{document.getElementById('surprise').style.display='block';document.getElementById('surpriseBtn').textContent='💖 Surprise opened!'};
+let ctx=null, timer=null, playing=false;
+const notes=[523.25,523.25,587.33,523.25,698.46,659.25,523.25,523.25,587.33,523.25,783.99,698.46];
+function playTune(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();let now=ctx.currentTime;notes.forEach((f,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.0001,now+i*.34);g.gain.exponentialRampToValueAtTime(.12,now+i*.34+.025);g.gain.exponentialRampToValueAtTime(.0001,now+i*.34+.29);o.connect(g);g.connect(ctx.destination);o.start(now+i*.34);o.stop(now+i*.34+.31)})}
+document.getElementById('musicBtn').onclick=()=>{if(!playing){playTune();timer=setInterval(playTune,notes.length*340+500);playing=true;document.getElementById('musicBtn').textContent='❚❚ Pause music'}else{clearInterval(timer);playing=false;document.getElementById('musicBtn').textContent='▶ Play birthday music'}};
+</script>
+</body>
+</html>
